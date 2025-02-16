@@ -21,27 +21,6 @@ Modifications were made to the `web-front.pkr.hcl` file to:
 - Copy required files (`index.html`, `nginx.conf`).
 - Run provisioning scripts (`install-nginx`, `setup-nginx`).
 
-**Example: Updating the Source AMI**
-```hcl
-source "amazon-ebs" "ubuntu" {
-  ami_name      = "web-nginx-aws-{{timestamp}}"
-  instance_type = "t2.micro"
-  region        = "us-west-2"
-
-  source_ami_filter {
-    filters = {
-      name                = "ubuntu/images/hvm-ssd/ubuntu-noble-24.04-amd64-server-*"
-      root-device-type    = "ebs"
-      virtualization-type = "hvm"
-    }
-    most_recent = true
-    owners      = ["099720109477"]
-  }
-
-  ssh_username = "ubuntu"
-}
-```
-
 ---
 
 ### **3 Formatting and Validating the Packer File**
@@ -81,7 +60,7 @@ A new EC2 instance was created using **AWS Console**:
 ### **6 SSH Into the EC2 Instance**
 To connect:
 ```sh
-ssh -i "C:\Users\Owner\.ssh\lab4.1.pem" ubuntu@<public-ip>
+ssh -i "C:\Users\Owner\.ssh\lab4.1.pem" ubuntu@ec2-34-220-174-157.us-west-2.compute.amazonaws.com
 ```
 Successful connection.
 
@@ -104,7 +83,7 @@ Additionally, the firewall and security groups were checked to allow HTTP traffi
 ### **8 Accessing the Web Page**
 The instance’s public IP was used to verify the web server:
 ```
-http://<public-ip>
+http://34.220.174.157
 ```
 The **index.html** page successfully loaded.
 
